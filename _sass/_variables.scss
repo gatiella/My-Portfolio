@@ -1,0 +1,85 @@
+// Color Palette - Cybersecurity Theme
+$primary-bg: #0a0e27;
+$secondary-bg: #0f0f0f;
+$tertiary-bg: #1a1a1a;
+
+$primary-green: #00ff41;
+$secondary-green: #00aa00;
+$dark-green: #005500;
+
+$text-primary: #e0e0e0;
+$text-secondary: #b0b0b0;
+$text-muted: #707070;
+
+$accent-cyan: #00d9ff;
+$accent-red: #ff0051;
+$accent-yellow: #ffcc00;
+
+$border-color: rgba(0, 255, 65, 0.3);
+$shadow-color: rgba(0, 255, 65, 0.2);
+
+// Typography
+$font-mono: 'Fira Code', 'Courier New', monospace;
+$font-display: 'Space Mono', monospace;
+$font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-large: 18px;
+$font-size-h1: 2.5rem;
+$font-size-h2: 2rem;
+$font-size-h3: 1.5rem;
+$font-size-h4: 1.25rem;
+
+$line-height-base: 1.6;
+$line-height-headings: 1.2;
+
+// Spacing
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+$spacing-xxl: 4rem;
+
+// Layout
+$container-max-width: 1200px;
+$content-max-width: 800px;
+$sidebar-width: 300px;
+
+// Border Radius
+$border-radius-sm: 3px;
+$border-radius-md: 5px;
+$border-radius-lg: 8px;
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Breakpoints
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+$breakpoint-xl: 1400px;
+
+// Box Shadow
+$box-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+$box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+$box-shadow-glow: 0 0 20px rgba(0, 255, 65, 0.3);
+
+// Animation timing
+$animation-duration-fast: 0.2s;
+$animation-duration-base: 0.4s;
+$animation-duration-slow: 0.6s;

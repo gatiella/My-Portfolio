@@ -1,0 +1,64 @@
+# Site Settings
+title: Daniel Mwangi | Cybersecurity Professional
+description: Cybersecurity Engineer | Software Developer | Network Security Specialist
+baseurl: ""
+url: "https://gatiella.github.io"
+author: Daniel Mwangi
+email: gatungudaniel7410@gmail.com
+
+# Social Media
+github_username: gatiella
+linkedin_username: gatiella
+twitter_username: danielmwangi
+hackthebox_profile: https://app.hackthebox.com/profile/gatiella
+tryhackme_profile: https://tryhackme.com
+
+# Build Settings
+markdown: kramdown
+highlighter: rouge
+
+# Permalink structure
+permalink: /blog/:year/:month/:day/:title/
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+  - scope:
+      path: "_pages"
+      type: "pages"
+    values:
+      layout: "page"
+      permalink: /:basename/
+
+# Include pages directory
+include: ['_pages']
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - README.md
+  - setup.sh

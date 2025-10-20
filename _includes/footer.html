@@ -1,0 +1,61 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>{{ site.title }}</h3>
+        <p>{{ site.description }}</p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          {% for item in site.data.navigation.main %}
+          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <div class="footer-social">
+          {% for social in site.data.navigation.social %}
+          <a href="{{ social.url }}" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="{{ social.title }}">
+            {% if social.icon == 'github' %}
+              <i class="fab fa-github"></i>
+            {% elsif social.icon == 'linkedin' %}
+              <i class="fab fa-linkedin"></i>
+            {% elsif social.icon == 'twitter' %}
+              <i class="fab fa-twitter"></i>
+            {% elsif social.icon == 'hackthebox' %}
+              <i class="fas fa-cube"></i>
+            {% elsif social.icon == 'tryhackme' %}
+              <i class="fas fa-shield-alt"></i>
+            {% endif %}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Latest Posts</h3>
+        <ul>
+          {% for post in site.posts limit:3 %}
+          <li>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; {{ site.time | date: '%Y' }} {{ site.author }}. All rights reserved.</p>
+      <p class="terminal-text">
+        <span class="prompt">$</span> whoami && echo "Cybersecurity Professional"
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,121 @@
+---
+layout: default
+---
+
+<article class="project" itemscope itemtype="http://schema.org/CreativeWork">
+  <header class="project-header">
+    <h1 class="project-title" itemprop="name">
+      <span class="terminal-prompt">$</span> {{ page.title }}
+    </h1>
+    
+    {% if page.description %}
+    <p class="project-description" itemprop="description">{{ page.description }}</p>
+    {% endif %}
+    
+    <div class="project-meta">
+      {% if page.date %}
+      <span class="project-date">
+        <i class="far fa-calendar"></i>
+        {{ page.date | date: "%B %Y" }}
+      </span>
+      {% endif %}
+      
+      {% if page.status %}
+      <span class="project-status status-{{ page.status | downcase }}">
+        <i class="fas fa-circle"></i>
+        {{ page.status }}
+      </span>
+      {% endif %}
+      
+      {% if page.difficulty %}
+      <span class="project-difficulty difficulty-{{ page.difficulty | downcase }}">
+        <i class="fas fa-signal"></i>
+        {{ page.difficulty }}
+      </span>
+      {% endif %}
+    </div>
+    
+    {% if page.tags %}
+    <div class="project-tags">
+      {% for tag in page.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    
+    {% if page.github or page.demo or page.download %}
+    <div class="project-links">
+      {% if page.github %}
+      <a href="{{ page.github }}" target="_blank" class="btn btn-primary">
+        <i class="fab fa-github"></i> View on GitHub
+      </a>
+      {% endif %}
+      
+      {% if page.demo %}
+      <a href="{{ page.demo }}" target="_blank" class="btn btn-secondary">
+        <i class="fas fa-external-link-alt"></i> Live Demo
+      </a>
+      {% endif %}
+      
+      {% if page.download %}
+      <a href="{{ page.download }}" class="btn btn-secondary" download>
+        <i class="fas fa-download"></i> Download
+      </a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </header>
+
+  {% if page.image %}
+  <div class="project-image">
+    <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" itemprop="image">
+  </div>
+  {% endif %}
+
+  <div class="project-content" itemprop="text">
+    {{ content }}
+  </div>
+
+  {% if page.technologies %}
+  <section class="project-technologies">
+    <h2>Technologies Used</h2>
+    <div class="tech-grid">
+      {% for tech in page.technologies %}
+      <div class="tech-item">
+        <i class="fas fa-check-circle"></i>
+        {{ tech }}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if page.features %}
+  <section class="project-features">
+    <h2>Key Features</h2>
+    <ul class="features-list">
+      {% for feature in page.features %}
+      <li>
+        <i class="fas fa-angle-right"></i>
+        {{ feature }}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if page.challenges %}
+  <section class="project-challenges">
+    <h2>Challenges & Solutions</h2>
+    <div class="challenges-content">
+      {{ page.challenges }}
+    </div>
+  </section>
+  {% endif %}
+
+  <footer class="project-footer">
+    <a href="{{ '/_pages/projects' | relative_url }}" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Projects
+    </a>
+  </footer>
+</article>

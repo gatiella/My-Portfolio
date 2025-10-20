@@ -1,0 +1,128 @@
+# Technical Skills organized by category
+
+penetration_testing:
+  title: "Penetration Testing"
+  icon: "🎯"
+  skills:
+    - name: "Web Application Testing"
+      level: 90
+    - name: "Network Penetration Testing"
+      level: 85
+    - name: "Mobile Application Testing"
+      level: 75
+    - name: "Wireless Security Testing"
+      level: 80
+    - name: "Social Engineering"
+      level: 70
+
+vulnerability_research:
+  title: "Vulnerability Research"
+  icon: "🔍"
+  skills:
+    - name: "Vulnerability Discovery"
+      level: 85
+    - name: "Exploit Development"
+      level: 80
+    - name: "Reverse Engineering"
+      level: 75
+    - name: "Binary Analysis"
+      level: 70
+    - name: "Fuzzing"
+      level: 75
+
+tools:
+  title: "Security Tools"
+  icon: "🛠️"
+  items:
+    - "Burp Suite Pro"
+    - "Metasploit Framework"
+    - "Nmap"
+    - "Wireshark"
+    - "Cobalt Strike"
+    - "BloodHound"
+    - "Ghidra"
+    - "IDA Pro"
+    - "John the Ripper"
+    - "Hashcat"
+    - "SQLMap"
+    - "Nikto"
+    - "OWASP ZAP"
+    - "Nessus"
+    - "OpenVAS"
+
+programming:
+  title: "Programming & Scripting"
+  icon: "💻"
+  languages:
+    - name: "Python"
+      level: 90
+      use: "Automation, Tool Development"
+    - name: "Bash"
+      level: 85
+      use: "Scripting, Automation"
+    - name: "PowerShell"
+      level: 80
+      use: "Windows Exploitation"
+    - name: "JavaScript"
+      level: 75
+      use: "Web Security, XSS"
+    - name: "C/C++"
+      level: 70
+      use: "Exploit Development"
+    - name: "Go"
+      level: 65
+      use: "Tool Development"
+    - name: "Ruby"
+      level: 60
+      use: "Metasploit Modules"
+
+frameworks:
+  title: "Frameworks & Methodologies"
+  icon: "📋"
+  items:
+    - name: "MITRE ATT&CK"
+      description: "Adversary tactics and techniques"
+    - name: "OWASP Top 10"
+      description: "Web application security risks"
+    - name: "PTES"
+      description: "Penetration Testing Execution Standard"
+    - name: "NIST Cybersecurity Framework"
+      description: "Security risk management"
+    - name: "OSSTMM"
+      description: "Open Source Security Testing"
+    - name: "Cyber Kill Chain"
+      description: "Attack lifecycle model"
+
+operating_systems:
+  title: "Operating Systems"
+  icon: "🖥️"
+  items:
+    - name: "Kali Linux"
+      proficiency: "Expert"
+    - name: "Parrot OS"
+      proficiency: "Advanced"
+    - name: "Windows"
+      proficiency: "Advanced"
+    - name: "Ubuntu/Debian"
+      proficiency: "Advanced"
+    - name: "MacOS"
+      proficiency: "Intermediate"
+    - name: "FreeBSD"
+      proficiency: "Intermediate"
+
+security_domains:
+  title: "Security Domains"
+  icon: "🛡️"
+  areas:
+    - name: "Red Team Operations"
+      description: "Adversary simulation and offensive security"
+    - name: "Blue Team Defense"
+      description: "Threat detection and incident response"
+    - name: "Application Security"
+      description: "Secure code review and SAST/DAST"
+    - name: "Network Security"
+      description: "Firewall, IDS/IPS, Network segmentation"
+    - name: "Cloud Security"
+      description: "AWS, Azure, GCP security"
+    - name: "Cryptography"
+      description: "Encryption, Hashing, PKI"

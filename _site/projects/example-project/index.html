@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Custom Network Scanner | Daniel Mwangi Cybersecurity Professional</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Custom Network Scanner" />
+<meta name="author" content="Daniel Mwangi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A fast, multi-threaded network scanner built with Python" />
+<meta property="og:description" content="A fast, multi-threaded network scanner built with Python" />
+<link rel="canonical" href="http://localhost:4000/projects/example-project/" />
+<meta property="og:url" content="http://localhost:4000/projects/example-project/" />
+<meta property="og:site_name" content="Daniel Mwangi Cybersecurity Professional" />
+<meta property="og:image" content="http://localhost:4000/assets/images/projects/network-scanner.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-01-15T00:00:00+03:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/projects/network-scanner.png" />
+<meta property="twitter:title" content="Custom Network Scanner" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Daniel Mwangi"},"dateModified":"2024-01-15T00:00:00+03:00","datePublished":"2024-01-15T00:00:00+03:00","description":"A fast, multi-threaded network scanner built with Python","headline":"Custom Network Scanner","image":"http://localhost:4000/assets/images/projects/network-scanner.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/projects/example-project/"},"url":"http://localhost:4000/projects/example-project/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/projects/example-project/">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Daniel Mwangi | Cybersecurity Professional" />
+  
+  
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="site-title">
+        <a href="/">
+          <span class="terminal-prompt">root@portfolio:~$</span>
+          <span class="cursor">_</span>
+        </a>
+      </div>
+      
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <nav class="main-nav">
+        <ul>
+          
+          <li>
+            <a href="/" 
+               >
+              Home
+            </a>
+          </li>
+          
+          <li>
+            <a href="/about/" 
+               >
+              About
+            </a>
+          </li>
+          
+          <li>
+            <a href="/projects/" 
+               >
+              Projects
+            </a>
+          </li>
+          
+          <li>
+            <a href="/blog/" 
+               >
+              Blog
+            </a>
+          </li>
+          
+          <li>
+            <a href="/certifications/" 
+               >
+              Certifications
+            </a>
+          </li>
+          
+          <li>
+            <a href="/contact/" 
+               >
+              Contact
+            </a>
+          </li>
+          
+        </ul>
+      </nav>
+      
+      <div class="social-links">
+        
+        <a href="https://github.com/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="GitHub">
+          
+            <i class="fab fa-github"></i>
+          
+        </a>
+        
+        <a href="https://linkedin.com/in/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="LinkedIn">
+          
+            <i class="fab fa-linkedin"></i>
+          
+        </a>
+        
+        <a href="https://twitter.com/danielmwangi" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Twitter">
+          
+            <i class="fab fa-twitter"></i>
+          
+        </a>
+        
+        <a href="https://app.hackthebox.com/profile/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="HackTheBox">
+          
+            <i class="fas fa-cube"></i>
+          
+        </a>
+        
+        <a href="https://tryhackme.com/p/gatiella" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="TryHackMe">
+          
+            <i class="fas fa-shield-alt"></i>
+          
+        </a>
+        
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div class="mobile-menu">
+    <nav>
+      <ul>
+        
+        <li>
+          <a href="/">Home</a>
+        </li>
+        
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        
+        <li>
+          <a href="/projects/">Projects</a>
+        </li>
+        
+        <li>
+          <a href="/blog/">Blog</a>
+        </li>
+        
+        <li>
+          <a href="/certifications/">Certifications</a>
+        </li>
+        
+        <li>
+          <a href="/contact/">Contact</a>
+        </li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="project" itemscope itemtype="http://schema.org/CreativeWork">
+  <header class="project-header">
+    <h1 class="project-title" itemprop="name">
+      <span class="terminal-prompt">$</span> Custom Network Scanner
+    </h1>
+    
+    
+    <p class="project-description" itemprop="description">A fast, multi-threaded network scanner built with Python</p>
+    
+    
+    <div class="project-meta">
+      
+      <span class="project-date">
+        <i class="far fa-calendar"></i>
+        January 2024
+      </span>
+      
+      
+      
+      <span class="project-status status-completed">
+        <i class="fas fa-circle"></i>
+        Completed
+      </span>
+      
+      
+      
+      <span class="project-difficulty difficulty-medium">
+        <i class="fas fa-signal"></i>
+        Medium
+      </span>
+      
+    </div>
+    
+    
+    <div class="project-tags">
+      
+      <span class="tag">Python</span>
+      
+      <span class="tag">Network Security</span>
+      
+      <span class="tag">Scanning</span>
+      
+      <span class="tag">Tool Development</span>
+      
+    </div>
+    
+    
+    
+    <div class="project-links">
+      
+      <a href="https://github.com/yourusername/network-scanner" target="_blank" class="btn btn-primary">
+        <i class="fab fa-github"></i> View on GitHub
+      </a>
+      
+      
+      
+      <a href="" target="_blank" class="btn btn-secondary">
+        <i class="fas fa-external-link-alt"></i> Live Demo
+      </a>
+      
+      
+      
+      <a href="" class="btn btn-secondary" download>
+        <i class="fas fa-download"></i> Download
+      </a>
+      
+    </div>
+    
+  </header>
+
+  
+  <div class="project-image">
+    <img src="/assets/images/projects/network-scanner.png" alt="Custom Network Scanner" itemprop="image">
+  </div>
+  
+
+  <div class="project-content" itemprop="text">
+    <h2 id="overview">Overview</h2>
+
+<p>This custom network scanner is designed to perform fast and efficient network reconnaissance. Built with Python and leveraging the Scapy library, it supports multiple scanning techniques and provides detailed information about discovered hosts and services.</p>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>During penetration testing engagements, I found existing tools sometimes lacked specific features I needed or were too slow for large networks. This project was born from the need for a customizable, fast, and reliable scanning tool.</p>
+
+<h2 id="features-in-detail">Features in Detail</h2>
+
+<h3 id="multi-threaded-architecture">Multi-threaded Architecture</h3>
+<p>The scanner uses Python’s threading module to perform concurrent scans, significantly reducing scan time for large networks.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">threaded_scan</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">ports</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nc">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">executor</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="nf">scan_port</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">ports</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">list</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="protocol-support">Protocol Support</h3>
+<ul>
+  <li><strong>TCP Connect Scans</strong>: Full three-way handshake</li>
+  <li><strong>SYN Scans</strong>: Stealthy half-open scanning</li>
+  <li><strong>UDP Scans</strong>: Connectionless protocol detection</li>
+  <li><strong>ICMP Ping Sweeps</strong>: Host discovery</li>
+</ul>
+
+<h3 id="service-detection">Service Detection</h3>
+<p>The tool attempts to identify services running on open ports by analyzing banner information and comparing against a signature database.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">detect_service</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">banner</span><span class="p">):</span>
+    <span class="n">signatures</span> <span class="o">=</span> <span class="nf">load_signatures</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">sig</span> <span class="ow">in</span> <span class="n">signatures</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sig</span><span class="p">[</span><span class="sh">'</span><span class="s">pattern</span><span class="sh">'</span><span class="p">]</span> <span class="ow">in</span> <span class="n">banner</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sig</span><span class="p">[</span><span class="sh">'</span><span class="s">service</span><span class="sh">'</span><span class="p">]</span>
+    <span class="k">return</span> <span class="sh">"</span><span class="s">Unknown</span><span class="sh">"</span>
+</code></pre></div></div>
+
+<h2 id="installation">Installation</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Clone the repository</span>
+git clone https://github.com/yourusername/network-scanner.git
+<span class="nb">cd </span>network-scanner
+
+<span class="c"># Install dependencies</span>
+pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+
+<span class="c"># Run the scanner</span>
+python scanner.py <span class="nt">--help</span>
+</code></pre></div></div>
+
+<h2 id="usage-examples">Usage Examples</h2>
+
+<h3 id="basic-host-scan">Basic Host Scan</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python scanner.py <span class="nt">-t</span> 192.168.1.1
+</code></pre></div></div>
+
+<h3 id="scan-specific-ports">Scan Specific Ports</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python scanner.py <span class="nt">-t</span> 192.168.1.0/24 <span class="nt">-p</span> 22,80,443,8080
+</code></pre></div></div>
+
+<h3 id="full-network-sweep">Full Network Sweep</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python scanner.py <span class="nt">-t</span> 192.168.1.0/24 <span class="nt">-p</span> 1-65535 <span class="nt">-o</span> results.json
+</code></pre></div></div>
+
+<h3 id="service-detection-1">Service Detection</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python scanner.py <span class="nt">-t</span> 192.168.1.1 <span class="nt">-sV</span>
+</code></pre></div></div>
+
+<h2 id="technical-architecture">Technical Architecture</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────┐
+│      Command Line Interface         │
+└──────────────┬──────────────────────┘
+               │
+┌──────────────▼──────────────────────┐
+│       Argument Parser               │
+└──────────────┬──────────────────────┘
+               │
+┌──────────────▼──────────────────────┐
+│      Scan Orchestrator              │
+│  ┌────────────────────────────┐    │
+│  │  Thread Pool Manager       │    │
+│  └────────────────────────────┘    │
+└──────────────┬──────────────────────┘
+               │
+     ┌─────────┼─────────┐
+     │         │         │
+┌────▼───┐ ┌──▼────┐ ┌──▼────┐
+│  TCP   │ │  UDP  │ │ ICMP  │
+│ Scan   │ │ Scan  │ │ Scan  │
+└────┬───┘ └───┬───┘ └───┬───┘
+     │         │         │
+     └─────────┼─────────┘
+               │
+┌──────────────▼──────────────────────┐
+│      Results Aggregator             │
+└──────────────┬──────────────────────┘
+               │
+┌──────────────▼──────────────────────┐
+│      Output Formatter               │
+│  (JSON / CSV / Terminal)            │
+└─────────────────────────────────────┘
+</code></pre></div></div>
+
+<h2 id="performance-benchmarks">Performance Benchmarks</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Network Size</th>
+      <th>Ports</th>
+      <th>Time (Standard)</th>
+      <th>Time (Multi-threaded)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Single Host</td>
+      <td>1000</td>
+      <td>45s</td>
+      <td>8s</td>
+    </tr>
+    <tr>
+      <td>/24 Subnet</td>
+      <td>100</td>
+      <td>15m</td>
+      <td>2m</td>
+    </tr>
+    <tr>
+      <td>/16 Network</td>
+      <td>10</td>
+      <td>3h</td>
+      <td>25m</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="challenges--solutions">Challenges &amp; Solutions</h2>
+
+<h3 id="challenge-1-rate-limiting">Challenge 1: Rate Limiting</h3>
+<p><strong>Problem</strong>: Many firewalls and IDS systems detect and block rapid scanning.</p>
+
+<p><strong>Solution</strong>: Implemented adaptive rate limiting that adjusts scan speed based on response times and packet loss.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AdaptiveRateLimiter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">initial_rate</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">initial_rate</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">packet_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">def</span> <span class="nf">adjust_rate</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">packet_loss</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">:</span>  <span class="c1"># 10% loss
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">rate</span> <span class="o">*=</span> <span class="mf">0.8</span>  <span class="c1"># Slow down
+</span>        <span class="k">elif</span> <span class="n">self</span><span class="p">.</span><span class="n">packet_loss</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">rate</span> <span class="o">*=</span> <span class="mf">1.2</span>  <span class="c1"># Speed up
+</span></code></pre></div></div>
+
+<h3 id="challenge-2-privilege-requirements">Challenge 2: Privilege Requirements</h3>
+<p><strong>Problem</strong>: Raw socket operations require root/admin privileges.</p>
+
+<p><strong>Solution</strong>: Added fallback to non-privileged scanning methods when elevated privileges are unavailable.</p>
+
+<h3 id="challenge-3-large-network-memory-usage">Challenge 3: Large Network Memory Usage</h3>
+<p><strong>Problem</strong>: Scanning large networks consumed excessive memory.</p>
+
+<p><strong>Solution</strong>: Implemented generator-based iteration and result streaming to disk.</p>
+
+<h2 id="security-considerations">Security Considerations</h2>
+
+<p>⚠️ <strong>Legal Notice</strong>: This tool should only be used on networks you own or have explicit permission to test. Unauthorized network scanning is illegal.</p>
+
+<ul>
+  <li>Always obtain written authorization before scanning</li>
+  <li>Respect rate limits and network policies</li>
+  <li>Be aware of logging and detection systems</li>
+  <li>Use responsibly and ethically</li>
+</ul>
+
+<h2 id="future-enhancements">Future Enhancements</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Add OS fingerprinting capabilities</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Implement NSE script support</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Create GUI interface</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Add vulnerability database integration</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Support for IPv6 scanning</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Cloud deployment options</li>
+</ul>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>Contributions are welcome! Please read <a href="https://github.com/yourusername/network-scanner/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
+
+<h2 id="license">License</h2>
+
+<p>This project is licensed under the MIT License - see the <a href="https://github.com/yourusername/network-scanner/blob/main/LICENSE">LICENSE</a> file for details.</p>
+
+<h2 id="acknowledgments">Acknowledgments</h2>
+
+<ul>
+  <li>Scapy library developers</li>
+  <li>The Nmap project for inspiration</li>
+  <li>Security community for feedback and testing</li>
+</ul>
+
+<hr />
+
+<h2 id="related-projects">Related Projects</h2>
+
+<ul>
+  <li><a href="/projects/port-scanner-pro">Port Scanner Pro</a></li>
+  <li><a href="/projects/vuln-scanner">Vulnerability Assessment Tool</a></li>
+  <li><a href="/projects/enum-suite">Network Enumeration Suite</a></li>
+</ul>
+
+  </div>
+
+  
+  <section class="project-technologies">
+    <h2>Technologies Used</h2>
+    <div class="tech-grid">
+      
+      <div class="tech-item">
+        <i class="fas fa-check-circle"></i>
+        Python 3.x
+      </div>
+      
+      <div class="tech-item">
+        <i class="fas fa-check-circle"></i>
+        Scapy
+      </div>
+      
+      <div class="tech-item">
+        <i class="fas fa-check-circle"></i>
+        Threading
+      </div>
+      
+      <div class="tech-item">
+        <i class="fas fa-check-circle"></i>
+        Socket Programming
+      </div>
+      
+      <div class="tech-item">
+        <i class="fas fa-check-circle"></i>
+        JSON
+      </div>
+      
+    </div>
+  </section>
+  
+
+  
+  <section class="project-features">
+    <h2>Key Features</h2>
+    <ul class="features-list">
+      
+      <li>
+        <i class="fas fa-angle-right"></i>
+        Multi-threaded scanning for improved speed
+      </li>
+      
+      <li>
+        <i class="fas fa-angle-right"></i>
+        Support for TCP, UDP, and ICMP protocols
+      </li>
+      
+      <li>
+        <i class="fas fa-angle-right"></i>
+        Service version detection
+      </li>
+      
+      <li>
+        <i class="fas fa-angle-right"></i>
+        Custom port range scanning
+      </li>
+      
+      <li>
+        <i class="fas fa-angle-right"></i>
+        JSON output format
+      </li>
+      
+      <li>
+        <i class="fas fa-angle-right"></i>
+        Logging and error handling
+      </li>
+      
+    </ul>
+  </section>
+  
+
+  
+
+  <footer class="project-footer">
+    <a href="/_pages/projects" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Projects
+    </a>
+  </footer>
+</article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Daniel Mwangi | Cybersecurity Professional</h3>
+        <p>Cybersecurity Engineer | Software Developer | Network Security Specialist</p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          
+          <li><a href="/">Home</a></li>
+          
+          <li><a href="/about/">About</a></li>
+          
+          <li><a href="/projects/">Projects</a></li>
+          
+          <li><a href="/blog/">Blog</a></li>
+          
+          <li><a href="/certifications/">Certifications</a></li>
+          
+          <li><a href="/contact/">Contact</a></li>
+          
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <div class="footer-social">
+          
+          <a href="https://github.com/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="GitHub">
+            
+              <i class="fab fa-github"></i>
+            
+          </a>
+          
+          <a href="https://linkedin.com/in/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="LinkedIn">
+            
+              <i class="fab fa-linkedin"></i>
+            
+          </a>
+          
+          <a href="https://twitter.com/danielmwangi" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="Twitter">
+            
+              <i class="fab fa-twitter"></i>
+            
+          </a>
+          
+          <a href="https://app.hackthebox.com/profile/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="HackTheBox">
+            
+              <i class="fas fa-cube"></i>
+            
+          </a>
+          
+          <a href="https://tryhackme.com/p/gatiella" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             aria-label="TryHackMe">
+            
+              <i class="fas fa-shield-alt"></i>
+            
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Latest Posts</h3>
+        <ul>
+          
+          <li>
+            <a href="/blog/2025/02/01/building-custom-pentest-toolkit/">Building Your Custom Penetration Testing Toolkit</a>
+          </li>
+          
+          <li>
+            <a href="/blog/2025/01/15/hackthebox-writeup-example/">HackTheBox - [Box Name] Writeup</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Daniel Mwangi. All rights reserved.</p>
+      <p class="terminal-text">
+        <span class="prompt">$</span> whoami && echo "Cybersecurity Professional"
+      </p>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/terminal.js"></script>
+  
+  <!-- Back to top button -->
+  <button id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Matrix rain canvas (optional) -->
+  <canvas id="matrix-canvas"></canvas>
+</body>
+
+</html>

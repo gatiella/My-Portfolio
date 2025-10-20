@@ -1,0 +1,13 @@
+<!-- Google Analytics (Replace with your tracking ID) -->
+{% if site.google_analytics %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ site.google_analytics }}');
+</script>
+{% endif %}
+
+<!-- Alternative: Plausible Analytics (Privacy-friendly) -->
+<!-- <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script> -->

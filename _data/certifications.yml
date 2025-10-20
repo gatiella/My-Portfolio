@@ -1,0 +1,62 @@
+# Professional Certifications
+
+active:
+  - name: "Offensive Security Certified Professional"
+    short: "OSCP"
+    issuer: "Offensive Security"
+    date: "2024"
+    credential_id: "OS-XXXXX"
+    verification_url: "https://www.credential.net/xxxxx"
+    badge: "/assets/images/certifications/oscp.png"
+    description: "Hands-on penetration testing certification"
+    
+  - name: "Certified Ethical Hacker"
+    short: "CEH"
+    issuer: "EC-Council"
+    date: "2023"
+    credential_id: "ECC-XXXXX"
+    verification_url: "#"
+    badge: "/assets/images/certifications/ceh.png"
+    description: "Ethical hacking and penetration testing"
+    
+  - name: "CompTIA Security+"
+    short: "Security+"
+    issuer: "CompTIA"
+    date: "2023"
+    credential_id: "COMP-XXXXX"
+    verification_url: "#"
+    badge: "/assets/images/certifications/secplus.png"
+    description: "Foundation security certification"
+    
+  - name: "eLearnSecurity Junior Penetration Tester"
+    short: "eJPT"
+    issuer: "INE Security"
+    date: "2023"
+    credential_id: "INE-XXXXX"
+    verification_url: "#"
+    badge: "/assets/images/certifications/ejpt.png"
+    description: "Junior penetration testing skills"
+
+in_progress:
+  - name: "Offensive Security Web Expert"
+    short: "OSWE"
+    issuer: "Offensive Security"
+    expected: "2025"
+    description: "Advanced web application security"
+    
+  - name: "Certified Red Team Professional"
+    short: "CRTP"
+    issuer: "Pentester Academy"
+    expected: "2025"
+    description: "Active Directory security"
+
+planned:
+  - name: "Offensive Security Certified Expert"
+    short: "OSCE"
+    issuer: "Offensive Security"
+    description: "Advanced exploitation techniques"
+    
+  - name: "GIAC Penetration Tester"
+    short: "GPEN"
+    issuer: "GIAC"
+    description: "Advanced penetration testing"

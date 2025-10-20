@@ -1,0 +1,99 @@
+---
+layout: default
+title: 404 - Page Not Found
+permalink: /404.html
+---
+
+<div class="error-page">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <span class="terminal-title">terminal@error:~$</span>
+    </div>
+    <div class="terminal-body">
+      <pre>
+$ ls /requested/page
+ls: cannot access '/requested/page': No such file or directory
+
+$ cat error.log
+[ERROR] 404 - Page Not Found
+The page you're looking for doesn't exist or has been moved.
+
+$ whoami
+Lost visitor
+
+$ pwd
+/404
+
+$ ls -la ~
+total 0
+drwxr-xr-x  <a href="{{ '/' | relative_url }}">Home</a>
+drwxr-xr-x  <a href="{{ '/_pages/projects' | relative_url }}">Projects</a>
+drwxr-xr-x  <a href="{{ '/_pages/blog' | relative_url }}">Blog</a>
+drwxr-xr-x  <a href="{{ '/_pages/about' | relative_url }}">About</a>
+drwxr-xr-x  <a href="{{ '/_pages/contact' | relative_url }}">Contact</a>
+
+$ echo "Try navigating to one of the directories above"
+      </pre>
+    </div>
+  </div>
+  
+  <div class="error-actions">
+    <a href="{{ '/' | relative_url }}" class="btn btn-primary">← Return Home</a>
+  </div>
+</div>
+
+<style>
+.error-page {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 20px;
+}
+
+.terminal-window {
+  background: #0d0d0d;
+  border: 2px solid #00ff41;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: #1a1a1a;
+  padding: 10px;
+  border-bottom: 1px solid #00ff41;
+}
+
+.terminal-title {
+  color: #00ff41;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+.terminal-body {
+  padding: 20px;
+  color: #00ff41;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.terminal-body pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.terminal-body a {
+  color: #00ff41;
+  text-decoration: underline;
+}
+
+.terminal-body a:hover {
+  color: #00aa00;
+  background: rgba(0, 255, 65, 0.1);
+}
+
+.error-actions {
+  text-align: center;
+  margin-top: 30px;
+}
+</style>
