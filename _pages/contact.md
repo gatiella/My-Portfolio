@@ -68,7 +68,7 @@ I'm always interested in connecting with fellow security professionals, discussi
 
 ## Contact Form
 
-<form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+<form class="contact-form" action="https://formspree.io/f/xgvejyle" method="POST">
   <div class="form-group">
     <label for="name">Name <span class="required">*</span></label>
     <input type="text" id="name" name="name" required>
@@ -76,18 +76,21 @@ I'm always interested in connecting with fellow security professionals, discussi
   
   <div class="form-group">
     <label for="email">Email <span class="required">*</span></label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="_replyto" required>
   </div>
   
   <div class="form-group">
     <label for="subject">Subject <span class="required">*</span></label>
-    <input type="text" id="subject" name="subject" required>
+    <input type="text" id="subject" name="_subject" required>
   </div>
   
   <div class="form-group">
     <label for="message">Message <span class="required">*</span></label>
     <textarea id="message" name="message" rows="6" required></textarea>
   </div>
+
+  <!-- Honeypot for spam protection -->
+  <input type="text" name="_gotcha" style="display:none">
   
   <button type="submit" class="btn btn-primary">
     <i class="fas fa-paper-plane"></i> Send Message
@@ -183,19 +186,6 @@ I'm always interested in connecting with fellow security professionals, discussi
 
 ---
 
-## PGP Key
-
-For encrypted communications:
-```
------BEGIN PGP PUBLIC KEY BLOCK-----
-[Your PGP Public Key Here]
------END PGP PUBLIC KEY BLOCK-----
-```
-
-[Download PGP Key](/assets/files/pgp-key.asc)
-
----
-
 ## Response Time
 
 I typically respond to messages within **24-48 hours**. For urgent security matters, please use the subject line "URGENT" in your email.
@@ -215,7 +205,7 @@ I'm open to:
 
 ## Location
 
-📍 Currently based in: [Your City, Country]  
+📍 Currently based in: Kenya  
 🌍 Available for remote work worldwide
 
 ---
