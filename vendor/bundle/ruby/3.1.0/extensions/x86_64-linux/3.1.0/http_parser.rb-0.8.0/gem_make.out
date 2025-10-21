@@ -1,0 +1,19 @@
+current directory: /home/user/My-Portfolio/vendor/bundle/ruby/3.1.0/gems/http_parser.rb-0.8.0/ext/ruby_http_parser
+/nix/store/34m81j0bjrrns6hyp1xlbcd93dxgpm01-ruby-3.1.5/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/user/My-Portfolio/vendor/bundle/ruby/3.1.0/gems/http_parser.rb-0.8.0/ext/ruby_http_parser
+make DESTDIR\= sitearchdir\=./.gem.20251021-2893-pnt6lh sitelibdir\=./.gem.20251021-2893-pnt6lh clean
+
+current directory: /home/user/My-Portfolio/vendor/bundle/ruby/3.1.0/gems/http_parser.rb-0.8.0/ext/ruby_http_parser
+make DESTDIR\= sitearchdir\=./.gem.20251021-2893-pnt6lh sitelibdir\=./.gem.20251021-2893-pnt6lh
+compiling ruby_http_parser.c
+compiling ryah_http_parser.c
+linking shared-object ruby_http_parser.so
+
+current directory: /home/user/My-Portfolio/vendor/bundle/ruby/3.1.0/gems/http_parser.rb-0.8.0/ext/ruby_http_parser
+make DESTDIR\= sitearchdir\=./.gem.20251021-2893-pnt6lh sitelibdir\=./.gem.20251021-2893-pnt6lh install
+install -c -p -m 755 ruby_http_parser.so ./.gem.20251021-2893-pnt6lh
+
+current directory: /home/user/My-Portfolio/vendor/bundle/ruby/3.1.0/gems/http_parser.rb-0.8.0/ext/ruby_http_parser
+make DESTDIR\= sitearchdir\=./.gem.20251021-2893-pnt6lh sitelibdir\=./.gem.20251021-2893-pnt6lh clean
